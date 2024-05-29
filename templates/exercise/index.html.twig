@@ -5,9 +5,23 @@
 {% block body %}
     <div class="container mt-5">
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 col-md-5">
                 {{ form(form) }}
-
+            </div>
+            <div class="col-12 col-md-6 offset-0 offset-md-1">
+                <h1>
+                    {{ word.word }}
+                </h1>
+                <p>{{ word.description }}</p>
+                {% for variation in word.wordVariations %}
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            {{ variation.variationType.name }} <br/>
+                            <span class="fw-light">{{ variation.commentary }}</span> <br/>
+                            <p style="font-size: 40px">{{ variation.variation }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>

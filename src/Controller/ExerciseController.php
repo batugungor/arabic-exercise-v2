@@ -65,6 +65,7 @@ class ExerciseController extends AbstractController
 
         return $this->render('exercise/index.html.twig', [
             'form' => $form,
+            "word" => $word
         ]);
     }
 
