@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ExerciseController!{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="fw-bolder">
+                            {{ word.word }}
+                        </h1>
+                        <h5>
+                            {{ word.meaning }}
+                        </h5>
+                        <p>
+                            {{ word.description }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                {% for variation in word.wordVariations %}
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            {{ variation.variationType.name }} <br/>
+                            <span class="fw-light">{{ variation.commentary }}</span> <br/>
+                            <p style="font-size: 40px">{{ variation.variation }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
