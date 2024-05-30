@@ -30,10 +30,17 @@ class WordVariation
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $commentary = null;
 
+    /**
+     * @var Collection<int, WordWordList>
+     */
+    #[ORM\OneToMany(targetEntity: WordWordList::class, mappedBy: 'variation')]
+    private Collection $wordWordLists;
+
 
     public function __construct()
     {
         $this->wordVariations = new ArrayCollection();
+        $this->wordWordLists = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -85,6 +92,36 @@ class WordVariation
     public function setCommentary(?string $commentary): static
     {
         $this->commentary = $commentary;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, WordWordList>
+     */
+    public function getWordWordLists(): Collection
+    {
+        return $this->wordWordLists;
+    }
+
+    public function addWordWordList(WordWordList $wordWordList): static
+    {
+        if (!$this->wordWordLists->contains($wordWordList)) {
+            $this->wordWordLists->add($wordWordList);
+            $wordWordList->setVariation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWordWordList(WordWordList $wordWordList): static
+    {
+        if ($this->wordWordLists->removeElement($wordWordList)) {
+            // set the owning side to null (unless already changed)
+            if ($wordWordList->getVariation() === $this) {
+                $wordWordList->setVariation(null);
+            }
+        }
 
         return $this;
     }

@@ -72,6 +72,7 @@ class ExerciseController extends AbstractController
     #[Route('/variations', name: 'app_exercise_variations')]
     public function variations(Request $request): Response
     {
+        $variationTypes = $this->entityManager->getRepository(VariationTypes::class)->findAll();
         $variationType = new VariationTypes();
 
         $form = $this->createForm(VariationTypeFormType::class, $variationType);
@@ -86,8 +87,9 @@ class ExerciseController extends AbstractController
             return $this->redirectToRoute('app_exercise_variations');
         }
 
-        return $this->render('exercise/index.html.twig', [
+        return $this->render('exercise/variation.html.twig', [
             'form' => $form,
+            'variationTypes' => $variationTypes
         ]);
     }
 

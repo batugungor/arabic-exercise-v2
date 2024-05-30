@@ -31,9 +31,16 @@ class Word
     #[ORM\OneToMany(targetEntity: WordVariation::class, mappedBy: 'word', orphanRemoval: true)]
     private Collection $wordVariations;
 
+    /**
+     * @var Collection<int, WordWordList>
+     */
+    #[ORM\OneToMany(targetEntity: WordWordList::class, mappedBy: 'word')]
+    private Collection $wordWordLists;
+
     public function __construct()
     {
         $this->wordVariations = new ArrayCollection();
+        $this->wordWordLists = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -110,5 +117,35 @@ class Word
     public function __toString(): string
     {
         return $this->getWord();
+    }
+
+    /**
+     * @return Collection<int, WordWordList>
+     */
+    public function getWordWordLists(): Collection
+    {
+        return $this->wordWordLists;
+    }
+
+    public function addWordWordList(WordWordList $wordWordList): static
+    {
+        if (!$this->wordWordLists->contains($wordWordList)) {
+            $this->wordWordLists->add($wordWordList);
+            $wordWordList->setWord($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWordWordList(WordWordList $wordWordList): static
+    {
+        if ($this->wordWordLists->removeElement($wordWordList)) {
+            // set the owning side to null (unless already changed)
+            if ($wordWordList->getWord() === $this) {
+                $wordWordList->setWord(null);
+            }
+        }
+
+        return $this;
     }
 }

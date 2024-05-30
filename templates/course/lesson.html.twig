@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ExerciseController!{% endblock %}
+
+{% block body %}
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-12 col-md-5">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="fw-bolder">{{ lesson.name }}</h1>
+                        <p>{{ lesson.description }}</p>
+                    </div>
+                    <div class="col-12">
+                        {{ form(lessonForm) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 offset-0 offset-md-1">
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Voeg nieuwe pagina toe aan de les
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                {{ form(form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="mb-5 mt-5">
+                {% for page in lesson.pages %}
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            {{ page.title }} <br/>
+                            <span class="fw-light">{{ page.description }}</span> <br/>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
